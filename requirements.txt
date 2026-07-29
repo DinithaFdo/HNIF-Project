@@ -1,0 +1,22 @@
+Core Deep Learning
+
+torch>=2.0.0
+transformers>=4.30.0
+accelerate>=0.20.0
+bitsandbytes>=0.40.0
+
+NLP & Filtering
+
+spacy>=3.5.0
+en_core_web_sm>=3.5.0
+
+Evaluation (For later benchmarking)
+
+lime>=0.2.0.1
+shap>=0.42.0
+
+Visualization & Data
+
+numpy>=1.24.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
