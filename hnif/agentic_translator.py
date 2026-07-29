@@ -9,8 +9,8 @@ class AgenticTranslator:
     using a locally hosted, quantized Large Language Model.
     """
 
-    def __init__(self, model_id: str = "Qwen/Qwen2.5-0.5B-Instruct"):
-        print("🤖 Initializing Agentic Translator (Ultra-Fast 0.5B SLM)...")
+    def __init__(self, model_id: str = "Qwen/Qwen2.5-1.5B-Instruct"):
+        print("Initializing Agentic Translator (Local LLM)...")
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
         try:
@@ -35,7 +35,7 @@ class AgenticTranslator:
                 device_map="auto" if self.device == "cuda" else None,
             )
             self.is_loaded = True
-            print("✅ Agentic Translator loaded successfully.")
+            print("Agentic Translator loaded successfully.")
 
         except Exception as e:
             print(
