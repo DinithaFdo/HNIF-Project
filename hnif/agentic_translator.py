@@ -66,16 +66,17 @@ class AgenticTranslator:
 
         # 2. Construct the Strict System Prompt
         system_prompt = (
-            "You are an expert Digital Forensic AI analyzing text for an Academic Integrity Board. "
-            "Translate the mathematical tensor data into a professional, objective 3-sentence audit report. "
-            "Do not hallucinate. Only reference the exact words and scores provided in the payload. "
-            "Explain exactly why the model flagged the text based on these specific causal words."
+            "You are an objective Digital Forensic AI API. Your ONLY job is to translate "
+            "mathematical attention scores into a concise, easy-to-understand 3-sentence summary. "
+            "Rule 1: NEVER hallucinate context, background, or intent (e.g., do not mention 'academic integrity' or 'plagiarism'). "
+            "Rule 2: ONLY use the provided statistical impact scores. "
+            "Rule 3: Explain exactly which words caused the AI to flag the text, using clear, simple human language."
         )
 
         user_prompt = (
-            f"Classification: {classification} (Confidence: {confidence:.2f}%)\n"
-            f"Top Causal Triggers Isolated by HNIF:\n{json.dumps(top_words, indent=2)}\n\n"
-            "Generate the 3-sentence professional summary now:"
+            f"Model Classification: {classification} (Confidence: {confidence:.2f}%)\n"
+            f"Highest Impact Tokens Isolated by HNIF Attention Tensors:\n{json.dumps(top_words, indent=2)}\n\n"
+            "Generate the 3-sentence analytical summary now:"
         )
 
         messages = [
