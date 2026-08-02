@@ -1,0 +1,65 @@
+# =========================
+# Python & Virtual Environments
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# =========================
+# Machine Learning & Large Models
+# =========================
+# Ignore all heavy model weights and tokenizers
+hnif/models/
+models/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.h5
+*.onnx
+*.msgpack
+
+# =========================
+# Jupyter Notebooks
+# =========================
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# =========================
+# IDEs & OS Files
+# =========================
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# Logs and Databases
+# =========================
+*.log
+*.sqlite3
