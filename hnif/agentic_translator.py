@@ -58,25 +58,31 @@ class AgenticTranslator:
         sorted_words = sorted(valid_words, key=lambda x: x["raw_score"], reverse=True)
         top_words = [
             {
-                "word": item["display_token"],
+                # Extra safety cleanup to remove any lingering DeBERTa symbols
+                "word": item["display_token"]
+                .replace(" ", "")
+                .replace("\u2581", "")
+                .strip(),
                 "impact": round(item["normalized_score"], 2),
             }
             for item in sorted_words[:5]
         ]
 
-        # 2. Construct the Strict System Prompt
+        # 2. Construct the Strict System Prompt (Format Enforcement)
         system_prompt = (
-            "You are an objective Digital Forensic AI API. Your ONLY job is to translate "
-            "mathematical attention scores into a concise, easy-to-understand 3-sentence summary. "
-            "Rule 1: NEVER hallucinate context, background, or intent (e.g., do not mention 'academic integrity' or 'plagiarism'). "
-            "Rule 2: ONLY use the provided statistical impact scores. "
-            "Rule 3: Explain exactly which words caused the AI to flag the text, using clear, simple human language."
+            "You are an objective Digital Forensic AI API. Your ONLY job is to translate a JSON "
+            "array of mathematical attention scores into a concise, strictly formatted 3-sentence summary.\n"
+            "CRITICAL: DO NOT hallucinate context, intent, or real-world applications (e.g., NEVER mention 'academic integrity', 'research', or 'plagiarism').\n"
+            "YOU MUST FOLLOW THIS EXACT FORMAT:\n"
+            "Sentence 1: State the model's classification and the confidence percentage.\n"
+            "Sentence 2: List the highest impact words and state that they were the primary statistical drivers.\n"
+            "Sentence 3: Conclude objectively that these specific causal triggers caused the network's decision, without adding any outside context."
         )
 
         user_prompt = (
             f"Model Classification: {classification} (Confidence: {confidence:.2f}%)\n"
             f"Highest Impact Tokens Isolated by HNIF Attention Tensors:\n{json.dumps(top_words, indent=2)}\n\n"
-            "Generate the 3-sentence analytical summary now:"
+            "Generate the 3-sentence analytical summary now following the exact format requested:"
         )
 
         messages = [
