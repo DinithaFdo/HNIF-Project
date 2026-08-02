@@ -6,13 +6,13 @@ import numpy as np
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import time
 
-# Import YOUR framework (Updated for your new folder structure)
-from adapter import run_hnif_analysis
+# Import the HNIF framework from the hnif package
+from hnif.adapter import run_hnif_analysis
 
 # ==============================================================================
 # 1. SETUP & CONFIGURATION
 # ==============================================================================
-app = FastAPI(title="XAI Audit API", version="1.0")
+app = FastAPI(title="Forensic AI Audit API", version="1.0")
 
 # Enable CORS so your Next.js frontend can talk to this backend
 app.add_middleware(
@@ -50,8 +50,8 @@ async def load_models():
     global model, tokenizer, device
     print("🚀 Starting Server: Loading Base Classifier into memory...")
 
-    # Path to the fine-tuned detection weights
-    LOCAL_MODEL_DIR = "./models"
+    # Path to the fine-tuned detection weights (Updated for root execution)
+    LOCAL_MODEL_DIR = "./hnif/models"
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"🖥️ Hardware detected: {device.upper()}")
@@ -101,7 +101,7 @@ def perform_classification(text: str):
 @app.post("/api/audit")
 async def audit_text(request: AuditRequest):
     """
-    Primary endpoint for processing XAI audit requests.
+    Primary endpoint for processing forensic audit requests.
     """
     if not request.text or len(request.text.strip()) == 0:
         raise HTTPException(status_code=400, detail="Text payload cannot be empty.")
