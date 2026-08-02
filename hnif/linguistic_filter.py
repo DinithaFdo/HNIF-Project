@@ -34,8 +34,15 @@ class LinguisticNoiseFilter:
 
         # Pass 1: Identify noise and clean the text
         for token, score in zip(raw_tokens, raw_scores):
-            # Clean DeBERTa/RoBERTa specific subword prefixes ( Ġ or _ )
-            clean_token = token.replace("Ġ", "").replace(" ", "").replace("_", "")
+            # Clean DeBERTa/RoBERTa/SentencePiece specific subword prefixes
+            # \u2581 is the mathematical unicode for the DeBERTa block character ' '
+            clean_token = (
+                token.replace("Ġ", "")
+                .replace("_", "")
+                .replace(" ", "")
+                .replace("\u2581", "")
+                .strip()
+            )
 
             is_noise = False
 
